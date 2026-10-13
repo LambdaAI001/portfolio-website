@@ -11,6 +11,12 @@ importers:
       '@base-ui/react':
         specifier: ^1.9.0
         version: 1.9.0(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+      '@formepdf/core':
+        specifier: ^0.28.0
+        version: 0.28.0(react@19.3.0)
+      '@formepdf/react':
+        specifier: ^0.28.0
+        version: 0.28.0(react@19.3.0)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -306,6 +312,19 @@ packages:
 
   '@floating-ui/utils@0.2.12':
     resolution: {integrity: sha512-HpCo8tmWzLVad5s2d19EhAz5zqrrQ6s69qd6moPMQvkOuSwDT1YgRfWSVuc4ennqrgv3OHppiOGMQ7oC13yIww==}
+
+  '@formepdf/core@0.28.0':
+    resolution: {integrity: sha512-0wJKPpCq15jPTNv82OG6zZeE6S2b2B5beIbkIrWQ5T8kOVNq5lAAsiO/+/42vunejgqPLA8H5pA4AQ+pcqLwLQ==}
+    peerDependencies:
+      react: ^18 || ^19
+
+  '@formepdf/react@0.28.0':
+    resolution: {integrity: sha512-mytvkfkMQ83h2rBm/f0HrQ3EBU675CvazOun+XWhBHxd54GTHE/XKDqiYZ3GgmHjNGYhjRqQClFPDoRXmaVS7w==}
+    peerDependencies:
+      react: ^18 || ^19
+
+  '@formepdf/shared@0.28.0':
+    resolution: {integrity: sha512-i9XsJFM07U3pMcdQRM5xHa98WamYf9U+S1UOeBxKWWPCGBpHWx94dAkzFsglGekHAXDiFDkDEFHSgvHHL91Q2w==}
 
   '@hono/node-server@2.1.4':
     resolution: {integrity: sha512-2g1qeHl4BduwDn6L8nkAvDrPUWPMlkQ//a5NhP/zIyaXKMjZNRV+cG9Csu+BiJFf6+68pqzjf4Hi5sJGKHuS1g==}
@@ -1322,6 +1341,10 @@ packages:
   enquirer@2.4.1:
     resolution: {integrity: sha512-rRqJg/6gd538VHvR3PSrdRBb/1Vy2YfzHqzvbhGIQpDRKIa4FgV/54b5Q1xYSxOOwKvjXweS26E0Q+nAMwp2pQ==}
     engines: {node: '>=8.6'}
+
+  entities@6.0.1:
+    resolution: {integrity: sha512-aN97NXWF6AWBTahfVOIrB/NShkzi5H7F9r1s9mD3cDj4Ko5f2qhhVoYMibXF7GlLveb/D2ioWay8lxI97Ven3g==}
+    engines: {node: '>=0.12'}
 
   env-paths@2.2.1:
     resolution: {integrity: sha512-+h1lkLKhZMTYjog1VEpJNG7NZJWcuc2DDk/qsqSTRRCOXiLjeQ1d1/udrUGhqMxUgAlwKNZ0cf2uqan5GLuS2A==}
@@ -2357,6 +2380,9 @@ packages:
     resolution: {integrity: sha512-TXfryirbmq34y8QBwgqCVLi+8oA3oWx2eAnSn62ITyEhEYaWRlVZ2DvMM9eZbMs/RfxPu/PK/aBLyGj4IrqMHw==}
     engines: {node: '>=18'}
 
+  parse5@7.3.0:
+    resolution: {integrity: sha512-IInvU7fabl34qmi9gY8XOVxhYyMyuH2xUNpb2q8/Y+7552KlejkRvqvD19nMoUW/uQGGbqNpA6Tufu5FL5BZgw==}
+
   parseurl@1.3.3:
     resolution: {integrity: sha512-CiyeOxFT/JZyN5m0z9PfXw4SCBJ6Sygz1Dpl0wqjlhDEGGBP1GnsUVEL0p63hoG1fcj3fHynXi9NYO4nWOL+qQ==}
     engines: {node: '>= 0.8'}
@@ -3261,6 +3287,20 @@ snapshots:
 
   '@floating-ui/utils@0.2.12': {}
 
+  '@formepdf/core@0.28.0(react@19.3.0)':
+    dependencies:
+      '@formepdf/react': 0.28.0(react@19.3.0)
+      react: 19.3.0
+
+  '@formepdf/react@0.28.0(react@19.3.0)':
+    dependencies:
+      '@formepdf/shared': 0.28.0
+      react: 19.3.0
+
+  '@formepdf/shared@0.28.0':
+    dependencies:
+      parse5: 7.3.0
+
   '@hono/node-server@2.1.4(hono@4.13.13)':
     dependencies:
       hono: 4.13.13
@@ -4162,6 +4202,8 @@ snapshots:
     dependencies:
       ansi-colors: 4.1.3
       strip-ansi: 6.0.1
+
+  entities@6.0.1: {}
 
   env-paths@2.2.1: {}
 
@@ -5338,6 +5380,10 @@ snapshots:
       callsites: 3.1.0
 
   parse-ms@4.0.0: {}
+
+  parse5@7.3.0:
+    dependencies:
+      entities: 6.0.1
 
   parseurl@1.3.3: {}
 

@@ -79,6 +79,11 @@ This portfolio is engineered as a **senior/staff-level technical portfolio** tha
 - Grouped by domain (*Frontend & Architecture*, *Backend & Systems*, *Cloud, DevOps & QA*).
 - Monospaced badge pills with subtle hover feedback.
 
+### 📄 Dynamic PDF Resume Engine (`@pdfcn/forme`)
+- No stale, manually maintained PDF files: `/resume.pdf` is dynamically rendered from `data/portfolio.ts` on demand.
+- Formats an executive-grade, ATS-friendly curriculum vitae with clean typography, core competencies, quantified impact bullets, and verified credentials.
+- Fully accessible via the Hero CTA and direct URL `/resume.pdf`.
+
 ### 🧭 Floating Glassmorphism Navbar & Interactive Footer
 - Sticky pill navigation bar with blur backdrop, section spy links, and brand monogram avatar.
 - Modern call-to-action footer with instant clipboard actions and smooth back-to-top scroll.
@@ -92,7 +97,8 @@ This portfolio is engineered as a **senior/staff-level technical portfolio** tha
 | **Framework** | [Next.js 15 (App Router)](https://nextjs.org/) | Hybrid static generation, Turbopack, Image optimization |
 | **Language** | [TypeScript 5](https://www.typescriptlang.org/) | Strict typing, robust data contracts |
 | **Styling** | [Tailwind CSS v4](https://tailwindcss.com/) | Modern atomic styling with OKLCH theme variables |
-| **Component System**| [shadcn/ui](https://ui.shadcn.com/) (Base Nova) | Accessible, accessible primitives (`Avatar`, `Badge`, `Button`, `Card`, `Tabs`) |
+| **Component System**| [shadcn/ui](https://ui.shadcn.com/) (Base Nova) | Accessible primitives (`Avatar`, `Badge`, `Button`, `Card`, `Tabs`) |
+| **PDF Generation** | [@pdfcn/forme](https://pdfcn.dev/) | React-to-PDF rendering for executive, ATS-friendly curriculum vitae |
 | **Icons** | [Lucide React](https://lucide.dev/) | Clean, consistent vector icons |
 | **Theming** | [next-themes](https://github.com/pacocoursey/next-themes) | Dark/Light mode provider with system preference support |
 | **Package Manager** | [pnpm](https://pnpm.io/) | Fast, disk space efficient package management |
@@ -103,11 +109,14 @@ This portfolio is engineered as a **senior/staff-level technical portfolio** tha
 
 ```
 ├── app/
+│   ├── api/resume/route.ts # Dynamic resume generator endpoint
+│   ├── resume.pdf/route.ts # Direct /resume.pdf route handler
 │   ├── favicon.ico
 │   ├── globals.css         # OKLCH color palettes & typography tokens
 │   ├── layout.tsx          # Root layout with ThemeProvider & fonts
 │   └── page.tsx            # Main portfolio composite page
 ├── components/
+│   ├── pdf/                # PDF theme and typography primitives
 │   ├── ui/                 # Official shadcn/ui primitives
 │   │   ├── avatar.tsx      # Avatar, AvatarImage, AvatarBadge
 │   │   ├── badge.tsx       # Status & technology badges
@@ -128,9 +137,11 @@ This portfolio is engineered as a **senior/staff-level technical portfolio** tha
 │   └── timeline.tsx
 ├── data/
 │   └── portfolio.ts        # 🧠 Single source of truth for all content
+├── lib/
+│   └── resume-pdf.tsx      # Forme Document definition & render pipeline
 ├── types/
 │   └── portfolio.ts        # TypeScript schemas & interfaces
-└── public/                 # Static assets (images, resume.pdf)
+└── public/                 # Static assets (favicons, icons)
 ```
 
 ---
