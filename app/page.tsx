@@ -23,7 +23,7 @@ export default function Home() {
         className="pointer-events-none fixed top-0 left-1/2 -z-10 h-96 w-full max-w-7xl -translate-x-1/2 bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,oklch(0.4865_0.2423_291.8661/0.12),transparent_70%)] dark:bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,oklch(0.6083_0.2172_297.1153/0.18),transparent_70%)]"
       />
 
-      <Navbar name={profile.name} avatarUrl={profile.avatarUrl} availableForWork={profile.availableForWork} />
+      <Navbar name={profile.name} avatarUrl={profile.avatarUrl} />
 
       <main className="mx-auto max-w-4xl px-4 sm:px-6 pb-16">
         <Hero profile={profile} />

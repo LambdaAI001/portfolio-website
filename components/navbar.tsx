@@ -1,96 +1,137 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { buttonVariants } from "./ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Separator } from "./ui/separator";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { ThemeToggle } from "./theme-toggle";
 
 interface NavbarProps {
   name: string;
   avatarUrl?: string;
-  availableForWork?: boolean;
 }
 
-export function Navbar({ name, avatarUrl, availableForWork = true }: NavbarProps) {
+const NAV_ITEMS = [
+  { href: "#experience", id: "experience", label: "Experience" },
+  { href: "#projects", id: "projects", label: "Projects" },
+  { href: "#skills", id: "skills", label: "Skills" },
+  { href: "#certifications", id: "certifications", label: "Credentials" },
+] as const;
+
+export function Navbar({ name, avatarUrl }: NavbarProps) {
+  const [activeSection, setActiveSection] = useState<string>("");
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 15);
+
+      const scrollPosition = window.scrollY + 160;
+      const sectionIds = ["experience", "projects", "skills", "certifications", "contact"];
+
+      for (let i = sectionIds.length - 1; i >= 0; i--) {
+        const id = sectionIds[i];
+        const element = document.getElementById(id);
+        if (element && element.offsetTop <= scrollPosition) {
+          setActiveSection(id);
+          return;
+        }
+      }
+
+      if (window.scrollY < 180) {
+        setActiveSection("");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const initials = name
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .slice(0, 2);
+
   return (
-    <header className="sticky top-4 z-50 mx-auto w-full max-w-4xl px-4 sm:px-6">
+    <header className="sticky top-3 sm:top-5 z-50 mx-auto w-full max-w-3xl px-3 sm:px-4">
       <nav
         aria-label="Main Navigation"
-        className="flex items-center justify-between rounded-full border border-border/70 bg-background/80 px-3 py-1.5 sm:px-4 sm:py-2 shadow-xs backdrop-blur-md transition-all duration-200 hover:border-border"
+        className={`flex items-center justify-between rounded-full border px-2 py-1.5 sm:px-3 sm:py-1.5 transition-all duration-300 ${
+          isScrolled
+            ? "border-border/80 bg-background/85 shadow-lg shadow-black/5 dark:shadow-black/30 backdrop-blur-xl ring-1 ring-border/20"
+            : "border-border/50 bg-background/70 shadow-xs backdrop-blur-md"
+        }`}
       >
-        {/* Brand / Monogram */}
-        <Link
-          href="#top"
-          className="group flex items-center gap-2.5 text-sm font-semibold tracking-tight transition-colors hover:text-primary"
-        >
-          <Avatar className="size-7 rounded-full ring-1 ring-primary/20 transition-transform group-hover:scale-105">
-            {avatarUrl && <AvatarImage src={avatarUrl} alt={name} className="object-cover" />}
-            <AvatarFallback className="bg-primary/10 font-mono text-xs font-bold text-primary">
-              {name
-                .split(" ")
-                .map((n) => n[0])
-                .join("")
-                .slice(0, 2)}
-            </AvatarFallback>
-          </Avatar>
-          <span className="hidden sm:inline font-medium text-foreground">
-            {name}
-          </span>
-        </Link>
+        {/* Brand Monogram */}
+        <Tooltip>
+          <TooltipTrigger
+            render={
+              <Link
+                href="#top"
+                className="group flex items-center gap-2 rounded-full p-0.5 text-xs font-semibold tracking-tight transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                aria-label={`Scroll to top - ${name}`}
+              />
+            }
+          >
+            <Avatar className="size-7 rounded-full border border-border/70 ring-1 ring-background transition-transform duration-200 group-hover:scale-105">
+              {avatarUrl && (
+                <AvatarImage src={avatarUrl} alt={name} className="object-cover" />
+              )}
+              <AvatarFallback className="bg-primary/10 font-mono text-[11px] font-bold text-primary">
+                {initials}
+              </AvatarFallback>
+            </Avatar>
+            <span className="hidden md:inline-block font-medium text-foreground tracking-tight text-xs pr-1">
+              {name}
+            </span>
+          </TooltipTrigger>
+          <TooltipContent side="bottom" sideOffset={8}>
+            Top
+          </TooltipContent>
+        </Tooltip>
 
-        {/* Section Navigation Links */}
-        <div className="flex items-center gap-0.5 text-xs font-medium text-muted-foreground sm:gap-2 sm:text-sm">
-          <Link
-            href="#experience"
-            className="rounded-full px-2 py-1 transition-colors hover:bg-muted hover:text-foreground sm:px-2.5"
-          >
-            Experience
-          </Link>
-          <Link
-            href="#projects"
-            className="rounded-full px-2 py-1 transition-colors hover:bg-muted hover:text-foreground sm:px-2.5"
-          >
-            Projects
-          </Link>
-          <Link
-            href="#skills"
-            className="rounded-full px-2 py-1 transition-colors hover:bg-muted hover:text-foreground sm:px-2.5"
-          >
-            Skills
-          </Link>
-          <Link
-            href="#certifications"
-            className="hidden sm:inline-block rounded-full px-2.5 py-1 transition-colors hover:bg-muted hover:text-foreground"
-          >
-            Credentials
-          </Link>
+        {/* Center Nav Links */}
+        <div className="flex items-center gap-0.5 rounded-full p-0.5 text-xs text-muted-foreground sm:gap-1">
+          {NAV_ITEMS.map((item) => {
+            const isActive = activeSection === item.id;
+            return (
+              <Link
+                key={item.id}
+                href={item.href}
+                className={`relative rounded-full px-2.5 py-1 text-xs font-medium transition-colors duration-150 sm:px-3 ${
+                  isActive
+                    ? "bg-muted font-semibold text-foreground"
+                    : "hover:bg-muted/60 hover:text-foreground"
+                }`}
+                aria-current={isActive ? "location" : undefined}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </div>
 
-        {/* Actions Group: Theme Toggle & Contact */}
-        <div className="flex items-center gap-1.5 sm:gap-2">
-          {availableForWork && (
-            <span className="hidden md:inline-flex items-center gap-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-600 dark:text-emerald-400">
-              <span className="relative flex size-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
-              </span>
-              Available
-            </span>
-          )}
-
+        {/* Right Action Group: Theme Toggle & Contact */}
+        <div className="flex items-center gap-1 sm:gap-1.5">
           <ThemeToggle />
+
+          <Separator orientation="vertical" className="h-4 bg-border/60 mx-0.5" />
 
           <a
             href="#contact"
             className={buttonVariants({
               variant: "default",
-              size: "xs",
-              className: "rounded-full font-medium h-7 px-3 text-xs",
+              size: "sm",
+              className: "group h-7 rounded-full px-2.5 sm:px-3 text-xs font-medium gap-1 shadow-2xs cursor-pointer",
             })}
           >
             <span>Contact</span>
-            <ArrowUpRight className="size-3" />
+            <ArrowUpRight className="size-3 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
           </a>
         </div>
       </nav>

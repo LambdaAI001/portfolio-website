@@ -9,51 +9,46 @@ export function CertificationsSection({
   certifications,
 }: CertificationsSectionProps) {
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="divide-y divide-border/50 rounded-xl border border-border/60 bg-card/30 overflow-hidden">
       {certifications.map((cert) => (
         <div
           key={cert.id}
-          className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-border/70 bg-card/60 p-5 backdrop-blur-xs transition-all duration-200 hover:border-primary/30 hover:bg-card/90 hover:shadow-xs"
+          className="group flex flex-col justify-between gap-3 p-4 sm:flex-row sm:items-center sm:gap-4 transition-colors hover:bg-muted/30"
         >
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="flex size-9 items-center justify-center rounded-lg border border-primary/20 bg-primary/10 text-primary">
-                <Award className="size-4.5" />
-              </span>
-              <span className="font-mono text-xs text-muted-foreground">
-                {cert.issueDate}
-              </span>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-semibold tracking-tight text-foreground transition-colors group-hover:text-primary">
+          <div className="flex items-start gap-3 sm:items-center">
+            <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+              <Award className="size-4" aria-hidden="true" />
+            </span>
+            <div className="space-y-0.5">
+              <h3 className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
                 {cert.name}
               </h3>
-              <p className="mt-1 flex items-center gap-1.5 text-xs text-muted-foreground">
-                <ShieldCheck className="size-3 text-muted-foreground/70" />
+              <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                <ShieldCheck className="size-3 text-muted-foreground/70" aria-hidden="true" />
                 <span>{cert.issuer}</span>
+                {cert.credentialId && (
+                  <>
+                    <span className="text-muted-foreground/40">•</span>
+                    <span className="font-mono text-[11px]">ID: {cert.credentialId}</span>
+                  </>
+                )}
               </p>
             </div>
           </div>
 
-          <div className="mt-4 flex items-center justify-between border-t border-border/40 pt-3 text-xs">
-            {cert.credentialId ? (
-              <span className="font-mono text-[11px] text-muted-foreground/80">
-                ID: {cert.credentialId}
-              </span>
-            ) : (
-              <span />
-            )}
-
+          <div className="flex items-center gap-4 pl-11 sm:pl-0">
+            <span className="font-mono text-xs text-muted-foreground">
+              {cert.issueDate}
+            </span>
             {cert.credentialUrl && (
               <a
                 href={cert.credentialUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 font-medium text-xs text-primary hover:underline"
+                className="inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline"
               >
                 <span>Verify</span>
-                <ArrowUpRight className="size-3" />
+                <ArrowUpRight className="size-3" aria-hidden="true" />
               </a>
             )}
           </div>

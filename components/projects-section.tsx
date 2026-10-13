@@ -23,7 +23,7 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
 
   const displayedSecondary = showAll
     ? secondaryProjects
-    : secondaryProjects.slice(0, 2);
+    : secondaryProjects.slice(0, 4);
 
   return (
     <div className="space-y-10">
@@ -88,10 +88,11 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
                 {project.description}
               </p>
 
-              {/* Key Impact / Metric Chip */}
+              {/* Key Impact / Metric */}
               {project.metrics && (
-                <div className="rounded-lg border border-border/40 bg-muted/40 px-3 py-1.5 font-mono text-xs text-foreground/80">
-                  {project.metrics}
+                <div className="flex items-center gap-2 pt-1 font-mono text-xs text-foreground/85">
+                  <span className="size-1.5 rounded-full bg-primary/60 shrink-0" aria-hidden="true" />
+                  <span>{project.metrics}</span>
                 </div>
               )}
             </div>
@@ -121,7 +122,7 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
               <FolderGit2 className="size-4" />
               <span>Other Open Source &amp; Tools ({secondaryProjects.length})</span>
             </h4>
-            {secondaryProjects.length > 2 && (
+            {secondaryProjects.length > 4 && (
               <button
                 onClick={() => setShowAll(!showAll)}
                 className="text-xs font-medium text-primary hover:underline cursor-pointer"
@@ -131,28 +132,28 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
             )}
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="divide-y divide-border/50 rounded-xl border border-border/60 bg-card/30 overflow-hidden">
             {displayedSecondary.map((project) => (
               <a
                 key={project.id}
                 href={project.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex flex-col justify-between rounded-xl border border-border/60 bg-card/40 p-4 transition-all duration-200 hover:border-primary/30 hover:bg-card/80"
+                className="group flex flex-col justify-between gap-2 p-4 transition-colors hover:bg-muted/30 sm:flex-row sm:items-center sm:gap-4"
               >
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                <div className="space-y-1 sm:max-w-md">
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-semibold text-sm text-foreground transition-colors group-hover:text-primary">
                       {project.name}
                     </span>
                     <ArrowUpRight className="size-3.5 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
                   </div>
-                  <p className="line-clamp-2 text-xs leading-relaxed text-muted-foreground">
+                  <p className="line-clamp-1 text-xs text-muted-foreground">
                     {project.description}
                   </p>
                 </div>
 
-                <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-border/30 pt-2 text-[11px]">
+                <div className="flex flex-wrap items-center gap-3 text-[11px] sm:justify-end">
                   <span className="font-mono text-muted-foreground/80">
                     {project.technologies.slice(0, 3).join(" • ")}
                   </span>
