@@ -203,7 +203,7 @@ export function Hero({ profile }: HeroProps) {
 
               {availableForWork && (
                 <AvatarBadge
-                  className="size-5 sm:size-6 border-2 border-background bg-emerald-500 ring-0 text-white"
+                  className="size-5 sm:size-6 border-2 border-background bg-emerald-500 ring-0 text-white right-1.5 bottom-1.5 sm:right-2 sm:bottom-2"
                   title={statusText}
                 >
                   <span className="size-2 rounded-full bg-white animate-pulse" />

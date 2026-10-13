@@ -47,6 +47,7 @@ export function Timeline({ entries, labelledBy }: TimelineProps) {
               key={id}
               role="tab"
               aria-selected={isActive}
+              aria-controls="timeline-panel"
               onClick={() => setActiveTab(id)}
               className={`group inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-medium transition-all duration-200 cursor-pointer ${
                 isActive
@@ -73,6 +74,8 @@ export function Timeline({ entries, labelledBy }: TimelineProps) {
       {/* Timeline track */}
       {filteredEntries.length > 0 ? (
         <ol
+          id="timeline-panel"
+          role="tabpanel"
           aria-labelledby={labelledBy}
           className="relative ml-4 border-l border-border"
         >

@@ -126,7 +126,7 @@ export function Footer({ email, name, socialLinks, year = 2025 }: FooterProps) {
           )}
           <button
             onClick={scrollToTop}
-            className="flex items-center gap-1 rounded px-2 py-1 transition-colors hover:bg-muted hover:text-foreground"
+            className="flex items-center gap-1 rounded px-2 py-1 transition-colors hover:bg-muted hover:text-foreground cursor-pointer"
             aria-label="Scroll back to top"
           >
             <ArrowUp className="size-3.5" />

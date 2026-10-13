@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { profile } from "@/data/portfolio";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,11 +15,24 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "John Doe | Senior Software Engineer",
-  description: "Portfolio and Resume for Joshua Maeba Nyamasege",
+  title: `${profile.name} | ${profile.role}`,
+  description: profile.summary,
+  authors: [{ name: profile.name }],
+  keywords: [
+    "Software Engineer",
+    "Full-Stack Engineer",
+    "TypeScript",
+    "Next.js",
+    "React",
+    "Portfolio",
+  ],
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html
       lang="en"
